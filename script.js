@@ -4,9 +4,8 @@ APEC Progress Widget
 -----------------------------------------
 */
 
-let totalPages = 1;
-
 let currentPage = 1;
+let totalPages = 8;
 
 function buildProgress() {
 
