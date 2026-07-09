@@ -89,24 +89,20 @@ function setTotalPages(total){
 
 function updateProgress() {
 
-    const percent = Math.round(
-        ((currentPage - 1) / (totalPages - 1)) * 100
-    );
+    let percent = 0;
 
-    document.getElementById("percent").innerHTML =
+    if (totalPages > 1) {
+
+        percent = Math.round(
+            ((currentPage - 1) / (totalPages - 1)) * 100
+        );
+
+    }
+
+    document.getElementById("percent").textContent =
         percent + "%";
 
 }
-
-let percent = 0;
-
-if (totalPages > 1) {
-    percent = Math.round(
-        ((currentPage - 1) / (totalPages - 1)) * 100
-    );
-}
-
-document.getElementById("percent").textContent = `${percent}%`;
 
 function render() {
 
