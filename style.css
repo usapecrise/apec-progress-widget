@@ -82,65 +82,17 @@ body{
 
 }
 
-.circle{
-
-    width:30px;
-    height:30px;
-
-    flex-shrink:0;
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:3px solid #D5DCE6;
-
-    background:#fff;
-
-    color:#7B8794;
-
-    font-weight:600;
-
-    transition:all .25s ease;
-
-}
-
-.completed{
-
-    background:#005DAA;
-
-    border-color:#005DAA;
-
-    color:white;
-
-}
-
-.current{
-
-    border:3px solid #005DAA;
-
-    color:#005DAA;
-
-    font-weight:700;
-
-    transform:scale(1.15);
-
-    box-shadow:
-        0 0 8px rgba(0,93,170,.20);
-
-}
-
 .line{
 
     flex:1;
 
-    height:3px;
+    height:4px;
 
-    background:#D5DCE6;
+    background:#D7DEE8;
 
     margin:0 6px;
+
+    border-radius:4px;
 
     transition:background .25s ease;
 
@@ -175,3 +127,50 @@ body{
     color:#777;
 
 }
+
+.progress-line{
+
+    display:flex;
+
+    align-items:center;
+
+    width:100%;
+
+    margin-top:20px;
+
+}
+
+.dot{
+
+    width:14px;
+
+    height:14px;
+
+    border-radius:50%;
+
+    background:#D7DEE8;
+
+    flex-shrink:0;
+
+    transition:all .25s ease;
+
+}
+
+.dot.completed{
+
+    background:#005DAA;
+
+}
+
+.dot.current{
+
+    width:18px;
+
+    height:18px;
+
+    background:white;
+
+    border:4px solid #005DAA;
+
+}
+
