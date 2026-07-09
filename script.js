@@ -1,31 +1,45 @@
 /*
------------------------------------------
+--------------------------------------------------
 APEC Progress Widget
------------------------------------------
+--------------------------------------------------
 */
 
-let currentPage = 1;
-let totalPages = 8;
+const config = {
+
+    totalPages: 8,      // Temporary
+    currentPage: 1,     // Temporary
+
+    accentColor: "#005DAA"
+
+};
+
+/*
+--------------------------------------------------
+Build Progress Indicator
+--------------------------------------------------
+*/
 
 function buildProgress() {
 
-    const progress = document.getElementById("progressLine");
+    const progress =
+        document.getElementById("progressLine");
 
     progress.innerHTML = "";
 
-    for (let i = 1; i <= totalPages; i++) {
+    for (let i = 1; i <= config.totalPages; i++) {
 
-        const dot = document.createElement("div");
+        const dot =
+            document.createElement("div");
 
         dot.className = "dot";
 
-        if (i < currentPage) {
+        if (i < config.currentPage) {
 
             dot.classList.add("completed");
 
         }
 
-        else if (i === currentPage) {
+        else if (i === config.currentPage) {
 
             dot.classList.add("current");
 
@@ -33,13 +47,14 @@ function buildProgress() {
 
         progress.appendChild(dot);
 
-        if (i < totalPages) {
+        if (i < config.totalPages) {
 
-            const line = document.createElement("div");
+            const line =
+                document.createElement("div");
 
             line.className = "line";
 
-            if (i < currentPage) {
+            if (i < config.currentPage) {
 
                 line.classList.add("completed");
 
@@ -53,38 +68,41 @@ function buildProgress() {
 
 }
 
-function setCurrentPage(page){
-
-    currentPage = page;
-
-    render();
-
-}
-
-function setTotalPages(total){
-
-    totalPages = total;
-
-    render();
-
-}
+/*
+--------------------------------------------------
+Update Percentage
+--------------------------------------------------
+*/
 
 function updateProgress() {
 
     let percent = 0;
 
-    if (totalPages > 1) {
+    if (config.totalPages > 1) {
 
         percent = Math.round(
-            ((currentPage - 1) / (totalPages - 1)) * 100
+
+            ((config.currentPage - 1) /
+
+            (config.totalPages - 1))
+
+            * 100
+
         );
 
     }
 
-    document.getElementById("percent").textContent =
-        percent + "%";
+    document
+        .getElementById("percent")
+        .textContent = percent + "%";
 
 }
+
+/*
+--------------------------------------------------
+Render
+--------------------------------------------------
+*/
 
 function render() {
 
@@ -94,35 +112,102 @@ function render() {
 
 }
 
+/*
+--------------------------------------------------
+Public API
+--------------------------------------------------
+*/
+
+window.ProgressWidget = {
+
+    setPage(page) {
+
+        page = Number(page);
+
+        if (isNaN(page)) return;
+
+        if (page < 1) page = 1;
+
+        if (page > config.totalPages)
+            page = config.totalPages;
+
+        config.currentPage = page;
+
+        render();
+
+    },
+
+    setTotalPages(total) {
+
+        total = Number(total);
+
+        if (isNaN(total)) return;
+
+        if (total < 1)
+            total = 1;
+
+        config.totalPages = total;
+
+        if (config.currentPage > total)
+            config.currentPage = total;
+
+        render();
+
+    },
+
+    setProgress(page, total) {
+
+        total = Number(total);
+        page = Number(page);
+
+        if (isNaN(total) || total < 1)
+            return;
+
+        if (isNaN(page) || page < 1)
+            page = 1;
+
+        if (page > total)
+            page = total;
+
+        config.totalPages = total;
+        config.currentPage = page;
+
+        render();
+
+    }
+
+};
+
+/*
+--------------------------------------------------
+Initial Render
+--------------------------------------------------
+*/
+
 render();
 
-//
-// Demo controls
-// Remove these once connected to Jotform
-//
+/*
+--------------------------------------------------
+Keyboard Demo
+(Removing later when Jotform controls it)
+--------------------------------------------------
+*/
+
 document.addEventListener("keydown", function (e) {
 
     if (e.key === "ArrowRight") {
 
-        if (currentPage < totalPages) {
-
-            currentPage++;
-
-            render();
-
-        }
+        ProgressWidget.setPage(
+            config.currentPage + 1
+        );
 
     }
 
     if (e.key === "ArrowLeft") {
 
-        if (currentPage > 1) {
-
-            currentPage--;
-
-            render();
-
-        }
+        ProgressWidget.setPage(
+            config.currentPage - 1
+        );
 
     }
 
