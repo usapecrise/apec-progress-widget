@@ -9,20 +9,14 @@ let totalPages = 8;
 
 function buildProgress() {
 
-    const progress =
-        document.getElementById("progressLine");
+    const progress = document.getElementById("progressLine");
 
     progress.innerHTML = "";
 
     for (let i = 1; i <= totalPages; i++) {
 
-        const node =
-            document.createElement("div");
-
-        node.className = "node";
-
-        const circle =
-            document.createElement("div");
+        // Circle
+        const circle = document.createElement("div");
 
         circle.className = "circle";
 
@@ -32,26 +26,24 @@ function buildProgress() {
             circle.innerHTML = "✔";
 
         }
-
         else if (i === currentPage) {
 
             circle.classList.add("current");
             circle.innerHTML = i;
 
         }
-
         else {
 
             circle.innerHTML = i;
 
         }
 
-        node.appendChild(circle);
+        progress.appendChild(circle);
 
+        // Line after every circle except the last
         if (i < totalPages) {
 
-            const line =
-                document.createElement("div");
+            const line = document.createElement("div");
 
             line.className = "line";
 
@@ -61,11 +53,9 @@ function buildProgress() {
 
             }
 
-            node.appendChild(line);
+            progress.appendChild(line);
 
         }
-
-        progress.appendChild(node);
 
     }
 
