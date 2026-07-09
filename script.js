@@ -15,32 +15,24 @@ function buildProgress() {
 
     for (let i = 1; i <= totalPages; i++) {
 
-        // Circle
-        const circle = document.createElement("div");
+        const dot = document.createElement("div");
 
-        circle.className = "circle";
+        dot.className = "dot";
 
         if (i < currentPage) {
 
-            circle.classList.add("completed");
-            circle.innerHTML = "✔";
+            dot.classList.add("completed");
 
         }
+
         else if (i === currentPage) {
 
-            circle.classList.add("current");
-            circle.innerHTML = i;
-
-        }
-        else {
-
-            circle.innerHTML = i;
+            dot.classList.add("current");
 
         }
 
-        progress.appendChild(circle);
+        progress.appendChild(dot);
 
-        // Line after every circle except the last
         if (i < totalPages) {
 
             const line = document.createElement("div");
