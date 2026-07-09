@@ -1,37 +1,36 @@
 /*
 --------------------------------------------------
 APEC Progress Widget
+Version 2
 --------------------------------------------------
 */
 
 const config = {
 
-    totalPages: 8,      // Temporary
-    currentPage: 1,     // Temporary
-
-    accentColor: "#005DAA"
+    totalPages: 8,      // Temporary until Jotform provides it
+    currentPage: 1
 
 };
 
 /*
 --------------------------------------------------
-Build Progress Indicator
+Build Dots
 --------------------------------------------------
 */
 
-function buildProgress() {
+function buildDots() {
 
-    const progress =
-        document.getElementById("progressLine");
+    const dots =
+        document.getElementById("dots");
 
-    progress.innerHTML = "";
+    dots.innerHTML = "";
 
     for (let i = 1; i <= config.totalPages; i++) {
 
         const dot =
             document.createElement("div");
 
-        dot.className = "dot";
+        dot.classList.add("dot");
 
         if (i < config.currentPage) {
 
@@ -45,24 +44,7 @@ function buildProgress() {
 
         }
 
-        progress.appendChild(dot);
-
-        if (i < config.totalPages) {
-
-            const line =
-                document.createElement("div");
-
-            line.className = "line";
-
-            if (i < config.currentPage) {
-
-                line.classList.add("completed");
-
-            }
-
-            progress.appendChild(line);
-
-        }
+        dots.appendChild(dot);
 
     }
 
@@ -70,7 +52,7 @@ function buildProgress() {
 
 /*
 --------------------------------------------------
-Update Percentage
+Update Progress Bar
 --------------------------------------------------
 */
 
@@ -81,32 +63,29 @@ function updateProgress() {
     if (config.totalPages > 1) {
 
         percent = Math.round(
-
             ((config.currentPage - 1) /
-
-            (config.totalPages - 1))
-
-            * 100
-
+            (config.totalPages - 1)) * 100
         );
 
     }
 
-    document
-        .getElementById("percent")
-        .textContent = percent + "%";
+    document.getElementById("percent").textContent =
+        percent + "%";
+
+    document.getElementById("fill").style.width =
+        percent + "%";
 
 }
 
 /*
 --------------------------------------------------
-Render
+Render Widget
 --------------------------------------------------
 */
 
 function render() {
 
-    buildProgress();
+    buildDots();
 
     updateProgress();
 
@@ -124,12 +103,13 @@ window.ProgressWidget = {
 
         page = Number(page);
 
-        if (isNaN(page)) return;
+        if (isNaN(page))
+            return;
 
-        if (page < 1) page = 1;
-
-        if (page > config.totalPages)
-            page = config.totalPages;
+        page = Math.max(
+            1,
+            Math.min(page, config.totalPages)
+        );
 
         config.currentPage = page;
 
@@ -141,15 +121,18 @@ window.ProgressWidget = {
 
         total = Number(total);
 
-        if (isNaN(total)) return;
+        if (isNaN(total))
+            return;
 
-        if (total < 1)
-            total = 1;
+        total = Math.max(1, total);
 
         config.totalPages = total;
 
-        if (config.currentPage > total)
+        if (config.currentPage > total) {
+
             config.currentPage = total;
+
+        }
 
         render();
 
@@ -157,20 +140,21 @@ window.ProgressWidget = {
 
     setProgress(page, total) {
 
-        total = Number(total);
         page = Number(page);
+        total = Number(total);
 
-        if (isNaN(total) || total < 1)
+        if (isNaN(page) || isNaN(total))
             return;
 
-        if (isNaN(page) || page < 1)
-            page = 1;
+        total = Math.max(1, total);
 
-        if (page > total)
-            page = total;
+        page = Math.max(
+            1,
+            Math.min(page, total)
+        );
 
-        config.totalPages = total;
         config.currentPage = page;
+        config.totalPages = total;
 
         render();
 
@@ -188,8 +172,8 @@ render();
 
 /*
 --------------------------------------------------
-Keyboard Demo
-(Removing later when Jotform controls it)
+Demo Keyboard Controls
+(Remove after Jotform integration)
 --------------------------------------------------
 */
 
