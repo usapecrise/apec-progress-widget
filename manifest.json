@@ -1,0 +1,14 @@
+{
+  "name": "Progress Widget",
+  "version": "1.0.0",
+  "description": "A professional page-based progress indicator for Jotform surveys.",
+  "author": "Jessica Cross",
+  "homepage": "https://yourgithubusername.github.io/apec-progress-widget/",
+  "icon": "assets/icon.png",
+  "entry": "index.html",
+  "width": 100,
+  "height": 180,
+  "supports": [
+    "iframe"
+  ]
+}
