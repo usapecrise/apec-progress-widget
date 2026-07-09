@@ -101,19 +101,13 @@ function updateProgress() {
 
 let percent = 0;
 
-if(totalPages > 1){
-
+if (totalPages > 1) {
     percent = Math.round(
-
-        ((currentPage - 1) /
-
-        (totalPages - 1))
-
-        * 100
-
+        ((currentPage - 1) / (totalPages - 1)) * 100
     );
-
 }
+
+document.getElementById("percent").textContent = `${percent}%`;
 
 function render() {
 
